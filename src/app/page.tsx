@@ -4,7 +4,7 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { ToolPanel } from '@/components/panels/ToolPanel'
 import { InfoPanel } from '@/components/panels/InfoPanel'
 import { GridArea } from '@/components/editor/GridArea'
-
+import { SupportBanner } from '@/components/ui/SupportBanner'
 export default function Home() {
   return (
     <div className="flex h-full flex-col">
@@ -26,6 +26,7 @@ export default function Home() {
           <InfoPanel />
         </Sidebar>
       </div>
+      <SupportBanner variant="floating" cafecitoUser="lfraggdev" bmacUser="" />
 
       <Footer />
     </div>

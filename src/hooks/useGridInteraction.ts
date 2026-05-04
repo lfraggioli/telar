@@ -25,7 +25,7 @@ function getCellFromPoint(
   rows: number,
   cols: number
 ): HoverCell | null {
-  const col = Math.floor((x - NUMBERS_WIDTH) / cellW)
+  const col = Math.floor(x / cellW)
   const row = Math.floor((y - NUMBERS_HEIGHT) / cellH)
   if (row < 0 || row >= rows || col < 0 || col >= cols) return null
   return { row, col }

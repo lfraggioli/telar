@@ -60,14 +60,14 @@ function drawCanvas(
 
   // Numbers background strip
   ctx.fillStyle = CANVAS_COLORS.numbersArea
-  ctx.fillRect(0,  0, NW,   cssH) // left strip
-  ctx.fillRect(NW, 0, cssW, NH)   // top strip
-  ctx.fillRect(0,  0, NW,   NH)   // corner
+  ctx.fillRect(cols * cellW, 0, NW,   cssH) // right strip
+  ctx.fillRect(0,            0, cssW, NH)   // top strip
+  ctx.fillRect(cols * cellW, 0, NW,   NH)   // corner
 
   // ── Cells ───────────────────────────────────────────────────────────────────
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      const x    = NW + c * cellW
+      const x    = c * cellW
       const y    = NH + r * cellH
       const color = grid[r]?.[c]?.color ?? null
 
@@ -80,7 +80,7 @@ function drawCanvas(
   if (showGridLines) {
     // Vertical
     for (let c = 0; c <= cols; c++) {
-      const x      = NW + c * cellW
+      const x      = c * cellW
       const isGuide = c % 10 === 0
       ctx.strokeStyle = isGuide ? CANVAS_COLORS.guideLine : CANVAS_COLORS.gridLine
       ctx.lineWidth   = isGuide ? 1 : 0.5
@@ -96,8 +96,8 @@ function drawCanvas(
       ctx.strokeStyle = isGuide ? CANVAS_COLORS.guideLine : CANVAS_COLORS.gridLine
       ctx.lineWidth   = isGuide ? 1 : 0.5
       ctx.beginPath()
-      ctx.moveTo(NW, y)
-      ctx.lineTo(NW + cols * cellW, y)
+      ctx.moveTo(0, y)
+      ctx.lineTo(cols * cellW, y)
       ctx.stroke()
     }
   }
@@ -108,11 +108,12 @@ function drawCanvas(
   ctx.font         = `${fontSize}px ui-monospace, monospace`
   ctx.textBaseline = 'middle'
 
-  // Row numbers (left, every 5)
-  ctx.textAlign = 'right'
+  // Row numbers (right, every 5, ascending from bottom)
+  ctx.textAlign = 'left'
   for (let r = 0; r < rows; r++) {
-    if (r === 0 || (r + 1) % 5 === 0) {
-      ctx.fillText(String(r + 1), NW - 4, NH + r * cellH + cellH / 2)
+    const label = rows - r
+    if (label === 1 || label % 5 === 0) {
+      ctx.fillText(String(label), cols * cellW + 4, NH + r * cellH + cellH / 2)
     }
   }
 
@@ -120,13 +121,13 @@ function drawCanvas(
   ctx.textAlign = 'center'
   for (let c = 0; c < cols; c++) {
     if (c === 0 || (c + 1) % 5 === 0) {
-      ctx.fillText(String(c + 1), NW + c * cellW + cellW / 2, NH / 2)
+      ctx.fillText(String(c + 1), c * cellW + cellW / 2, NH / 2)
     }
   }
 
   // ── Hover highlight ──────────────────────────────────────────────────────────
   if (hoverCell) {
-    const x = NW + hoverCell.col * cellW
+    const x = hoverCell.col * cellW
     const y = NH + hoverCell.row * cellH
     ctx.fillStyle   = CANVAS_COLORS.hoverFill
     ctx.fillRect(x, y, cellW, cellH)
