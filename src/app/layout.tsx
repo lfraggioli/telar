@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Playfair_Display, Geist_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Playfair_Display, Geist_Mono, Monoton } from 'next/font/google'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import './globals.css'
 
@@ -21,6 +21,13 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
+const monoton = Monoton({
+  variable: '--font-monoton',
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Telar — Editor de Patrones de Tejido',
   description:
@@ -35,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${plusJakarta.variable} ${playfair.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${plusJakarta.variable} ${playfair.variable} ${geistMono.variable} ${monoton.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="flex h-full flex-col overflow-hidden">

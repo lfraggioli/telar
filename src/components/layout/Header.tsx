@@ -1,7 +1,8 @@
 'use client'
 
 import { useRef } from 'react'
-import { Download, FileDown, Trash2, Save, FolderOpen } from 'lucide-react'
+import { Download, FileDown, Save, FolderOpen } from 'lucide-react'
+import { Logo } from '@/components/ui/Logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
@@ -20,7 +21,7 @@ import {
 export function Header() {
   const craft       = usePatternStore(selectCraft)
   const patternName = usePatternStore(selectPatternName)
-  const { changeCraft, setPatternName, clearGrid, loadPattern } = usePatternStore()
+  const { changeCraft, setPatternName, loadPattern } = usePatternStore()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -52,13 +53,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      {/* Logo */}
-      <div className="flex items-center gap-2 select-none">
-        <span className="text-xl leading-none">🧶</span>
-        <span className="font-heading text-xl font-bold tracking-tight text-primary">
-          Telar
-        </span>
-      </div>
+      <Logo />
 
       <Separator orientation="vertical" className="h-6" />
 
@@ -175,29 +170,6 @@ export function Header() {
           onChange={handleLoadJSON}
         />
 
-        <Separator orientation="vertical" className="h-6" />
-
-        {/* Clear grid */}
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                variant="ghost"
-                size="sm"
-                className="gap-1.5 text-xs text-muted-foreground hover:text-destructive"
-                onClick={() => {
-                  if (confirm('¿Limpiar toda la grilla? Esta acción se puede deshacer.')) {
-                    clearGrid()
-                  }
-                }}
-              />
-            }
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Limpiar</span>
-          </TooltipTrigger>
-          <TooltipContent>Limpiar toda la grilla</TooltipContent>
-        </Tooltip>
       </div>
     </header>
   )

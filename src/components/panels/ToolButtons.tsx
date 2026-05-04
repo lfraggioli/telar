@@ -1,6 +1,6 @@
 'use client'
 
-import { Paintbrush, Eraser, PaintBucket, Pipette, Undo2, Redo2 } from 'lucide-react'
+import { Paintbrush, Eraser, PaintBucket, Pipette, Undo2, Redo2, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { usePatternStore, selectTool, selectCanUndo, selectCanRedo } from '@/stores/usePatternStore'
@@ -18,7 +18,7 @@ export function ToolButtons() {
   const tool = usePatternStore(selectTool)
   const canUndo = usePatternStore(selectCanUndo)
   const canRedo = usePatternStore(selectCanRedo)
-  const { setTool, undo, redo } = usePatternStore()
+  const { setTool, undo, redo, clearGrid } = usePatternStore()
 
   return (
     <div className="flex flex-col gap-2">
@@ -100,6 +100,28 @@ export function ToolButtons() {
           </TooltipContent>
         </Tooltip>
       </div>
+
+      {/* Clear grid */}
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full gap-1.5 text-xs text-muted-foreground hover:text-destructive"
+              onClick={() => {
+                if (confirm('¿Limpiar toda la grilla? Esta acción se puede deshacer.')) {
+                  clearGrid()
+                }
+              }}
+            />
+          }
+        >
+          <Trash2 className="h-3.5 w-3.5" />
+          Limpiar
+        </TooltipTrigger>
+        <TooltipContent>Limpiar toda la grilla</TooltipContent>
+      </Tooltip>
     </div>
   )
 }
